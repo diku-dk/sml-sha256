@@ -40,7 +40,7 @@ command part of your build process.
 
 ## Authors
 
-The `Sha256` structure is adopted from
+The `SHA256` structure is adopted from
 [https://github.com/standardml/cmlib](https://github.com/standardml/cmlib),
 which is distributed under the MIT License (see the file
 [AUTHORS](AUTHORS) for a list of contributers to the
