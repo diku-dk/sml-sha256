@@ -40,7 +40,8 @@ jobs:
       - name: Install MLton and gmp (macos)
         if: ${{ env.OS == 'darwin' }}
         run: |
-          brew install mlton libgmp
+          brew update && brew install gmp
+          brew install mlton
           mlton
 
       - name: Install MLKit and smlpkg
