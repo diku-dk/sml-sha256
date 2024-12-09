@@ -37,36 +37,34 @@ jobs:
           sudo apt-get install -y mlton
           mlton
 
-      - name: Install MLton and gmp (macos)
-        if: ${{ env.OS == 'darwin' }}
+      - name: Install MLkit (linux)
+        if: ${{ env.OS == 'linux' && matrix.mlcomp == 'mlkit' }}
         run: |
-          arch -x86_64 brew install gmp
-          brew install mlton
-          mlton
-
-      - name: Install MLKit and smlpkg
-        working-directory: ${{ env.RUNHOME }}
-        run: |
-          echo "[OS: $OS, HOME: $RUNHOME]"
-          wget https://github.com/diku-dk/smlpkg/releases/download/v0.1.5/smlpkg-bin-dist-${{env.OS}}.tgz
-          tar xzf smlpkg-bin-dist-${{env.OS}}.tgz
-          echo "$HOME/smlpkg-bin-dist-${{env.OS}}/bin" >> $GITHUB_PATH
           wget https://github.com/melsman/mlkit/releases/download/v4.7.14/mlkit-bin-dist-${{env.OS}}.tgz
           tar xzf mlkit-bin-dist-${{env.OS}}.tgz
           echo "$HOME/mlkit-bin-dist-${{env.OS}}/bin" >> $GITHUB_PATH
           mkdir -p .mlkit
           echo "SML_LIB $HOME/mlkit-bin-dist-${{env.OS}}/lib/mlkit" > .mlkit/mlb-path-map
 
+      - name: Install MLton and MLKit (macos)
+        if: ${{ env.OS == 'darwin' }}
+        run: |
+          brew install mlkit
+          brew install mlton
+          mlton
+
+      - name: Install smlpkg
+        working-directory: ${{ env.RUNHOME }}
+        run: |
+          echo "[OS: $OS, HOME: $RUNHOME]"
+          wget https://github.com/diku-dk/smlpkg/releases/download/v0.1.5/smlpkg-bin-dist-${{env.OS}}.tgz
+          tar xzf smlpkg-bin-dist-${{env.OS}}.tgz
+          echo "$HOME/smlpkg-bin-dist-${{env.OS}}/bin" >> $GITHUB_PATH
+
       - name: Check
         run: |
           mlkit --version
           smlpkg --version
-
-      - name: Install MLton (macos)
-        if: ${{ env.OS == 'darwin' && matrix.mlcomp == 'mlton' }}
-        run: |
-          brew install mlton
-          mlton
 
       - name: Build
         run: MLCOMP=${{ matrix.mlcomp }} make clean all
