@@ -40,7 +40,7 @@ jobs:
       - name: Install MLton and gmp (macos)
         if: ${{ env.OS == 'darwin' }}
         run: |
-          brew update && brew install gmp
+          arch -x86_64 brew install gmp
           brew install mlton
           mlton
 
