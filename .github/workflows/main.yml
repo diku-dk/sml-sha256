@@ -45,11 +45,17 @@ jobs:
           echo "$HOME/mlkit-bin-dist-${{env.OS}}/bin" >> $GITHUB_PATH
           mkdir -p .mlkit
           echo "SML_LIB $HOME/mlkit-bin-dist-${{env.OS}}/lib/mlkit" > .mlkit/mlb-path-map
+          $HOME/mlkit-bin-dist-${{env.OS}}/bin/mlkit --version
 
-      - name: Install MLton and MLKit (macos)
-        if: ${{ env.OS == 'darwin' }}
+      - name: Install MLKit (macos)
+        if: ${{ env.OS == 'darwin' && matrix.mlcomp == 'mlkit' }}
         run: |
           brew install mlkit
+          mlkit --version
+
+      - name: Install MLton (macos)
+        if: ${{ env.OS == 'darwin' && matrix.mlcomp == 'mlton' }}
+        run: |
           brew install mlton
           mlton
 
@@ -60,11 +66,7 @@ jobs:
           wget https://github.com/diku-dk/smlpkg/releases/download/v0.1.5/smlpkg-bin-dist-${{env.OS}}.tgz
           tar xzf smlpkg-bin-dist-${{env.OS}}.tgz
           echo "$HOME/smlpkg-bin-dist-${{env.OS}}/bin" >> $GITHUB_PATH
-
-      - name: Check
-        run: |
-          mlkit --version
-          smlpkg --version
+          $HOME/smlpkg-bin-dist-${{env.OS}}/bin/smlpkg --version
 
       - name: Build
         run: MLCOMP=${{ matrix.mlcomp }} make clean all
