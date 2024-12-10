@@ -45,7 +45,6 @@ jobs:
           echo "$HOME/mlkit-bin-dist-${{env.OS}}/bin" >> $GITHUB_PATH
           mkdir -p .mlkit
           echo "SML_LIB $HOME/mlkit-bin-dist-${{env.OS}}/lib/mlkit" > .mlkit/mlb-path-map
-          $HOME/mlkit-bin-dist-${{env.OS}}/bin/mlkit --version
 
       - name: Install MLKit (macos)
         if: ${{ env.OS == 'darwin' && matrix.mlcomp == 'mlkit' }}
