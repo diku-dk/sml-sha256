@@ -49,7 +49,7 @@ jobs:
       - name: Install MLKit (macos)
         if: ${{ env.OS == 'darwin' && matrix.mlcomp == 'mlkit' }}
         run: |
-          brew install mlkit
+          arch -x86_64 brew install mlkit
           mlkit --version
 
       - name: Install MLton (macos)
