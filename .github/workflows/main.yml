@@ -38,6 +38,7 @@ jobs:
           mlton
 
       - name: Install MLkit (linux)
+        working-directory: ${{ env.RUNHOME }}
         if: ${{ env.OS == 'linux' && matrix.mlcomp == 'mlkit' }}
         run: |
           wget https://github.com/melsman/mlkit/releases/download/v4.7.14/mlkit-bin-dist-${{env.OS}}.tgz
